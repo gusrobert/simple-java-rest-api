@@ -1,5 +1,7 @@
 # Rest API
 
+Uma aplicação para cadastro, atualização e visualização de livros, com um frontend simples desenvolvido utilizando HTMx
+
 ### Obtém todos os livros
 
 ![Rota get all](assets/get_all.png)
