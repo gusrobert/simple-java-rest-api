@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <title>Teste HTMX</title>
+</head>
+<body>
+    <button 
+        hx-get="/api/livros/1/edit" 
+        hx-target="#editar-livro" 
+        hx-swap="innerHTML">
+        Editar
+    </button>
+
+    <div id="editar-livro"></div>
+</body>
+</html>

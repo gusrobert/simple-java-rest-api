@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Criar Livro</title>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+</head>
+<body>
+    <h2>Adicionar Novo Livro</h2>
+    <form id="livroForm" hx-post="/api/livros" hx-target="#resultado" hx-swap="outerHTML">
+        <label for="titulo">Título:</label>
+        <input type="text" id="titulo" name="titulo" required>
+        <br><br>
+
+        <label for="edicao">Edição:</label>
+        <input type="number" id="edicao" name="edicao" min="1" required>
+        <br><br>
+
+        <label for="autor">Autor:</label>
+        <input type="text" id="autor" name="autor" required>
+        <br><br>
+
+        <label for="categoria">Categoria:</label>
+        <select id="categoria" name="categoria" required>
+            <option value="ADMINISTRACAO">Administração</option>
+            <option value="MEDICINA">Medicina</option>
+            <option value="INFORMATICA">Informática</option>
+            <option value="MATEMATICA">Matemática</option>
+            <option value="ECONOMIA">Economia</option>
+        </select>
+        <br><br>
+
+        <label for="modelo">Modelo:</label>
+        <select id="modelo" name="modelo" required>
+            <option value="FISICO">Físico</option>
+            <option value="EBOOK">eBook</option>
+        </select>
+        <br><br>
+
+        <button type="button" onclick="enviarLivro()">Salvar</button>
+    </form>
+
+    <script>
+        function enviarLivro() {
+            const form = document.getElementById('livroForm');
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+        
+            fetch("/api/livros", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Sucesso:", data);
+            })
+            .catch(error => {
+                console.error("Erro:", error);
+            });
+        }
+    </script>
+
+    <div id="resultado"></div>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GET Request with HTMX</title>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+</head>
+<body>
+    <h2>Livros Disponíveis</h2>
+    
+    <button hx-get="/api/livros" hx-target="#tabela-livros" hx-trigger="click">Carregar Livros</button>
+    <button><a href="criar-livro.html" style="text-decoration: none; color: black;">Criar livros</a></button>
+    
+    
+    <div id="tabela-livros">
+    </div>
+
+    <div id="editar-livro">
+    </div>
+
+    <script>
+        document.addEventListener("htmx:afterOnLoad", (event) => {
+            const response = event.detail.xhr.response;
+            const livros = JSON.parse(response);
+            const tabela = document.createElement('table');
+            tabela.innerHTML = `
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Autor</th>
+                    <th>Categoria</th>
+                    <th>Modelo</th>
+                    <th>Edição</th>
+                    <th>Ações</th>
+                </tr>
+            `;
+            livros.forEach(livro => {
+                const row = tabela.insertRow();
+                row.innerHTML = `
+                    <td>${livro.isbn}</td>
+                    <td>${livro.titulo}</td>
+                    <td>${livro.autor}</td>
+                    <td>${livro.categoria}</td>
+                    <td>${livro.modelo}</td>
+                    <td>${livro.edicao}</td>
+                    <td>
+                        <button 
+                            hx-get="/api/livros/${livro.isbn}/edit" 
+                            hx-target="#editar-livro" 
+                            hx-trigger="click"
+                            hx-swap="innerHTML" >Editar
+                        </button>
+                        <button hx-delete="/api/livros/${livro.isbn}" hx-target="#tabela-livros" hx-swap="outerHTML">Deletar</button>
+                    </td>
+                `;
+            });
+            document.getElementById("tabela-livros").innerHTML = "";
+            document.getElementById("tabela-livros").appendChild(tabela);
+        });
+    </script>
+
+    
+</body>
+</html>
