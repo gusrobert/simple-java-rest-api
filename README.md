@@ -1,5 +1,6 @@
 # Rest API
 
+Sistema desenvolvido para a matéria Laboratório de desenvolvimento de software, na Fatec São José dos Campos.
 Uma aplicação para cadastro, atualização e visualização de livros, com um frontend simples desenvolvido utilizando HTMx
 
 ![Index](assets/index.png)
